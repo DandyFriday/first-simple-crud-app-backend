@@ -1,8 +1,15 @@
 const express = require('express')
 const mongoose = require('mongoose');
 const Product = require('./models/ProductModel.js');
+const dotenv = require('dotenv');
 const ProductRoute = require('./routes/ProductRoute.js');
-const app = express()
+
+
+
+dotenv.config(); 
+
+const app = express();
+const PORT = process.env.PORT || 3000; 
 
 //Middleware
 app.use(express.json());
@@ -17,13 +24,13 @@ app.get('/', (req, res) => {
 });
 
 //connection to mongodb    9JuF5CtSGKqefhYOe  dandyfriday31
-mongoose.connect("mongodb+srv://dandyfriday31:014EyDK4b2cNoeoy@cluster0.duurb6u.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
-.then(() => {
+mongoose.connect(process.env.MONGODB_URI)
+  .then(() => {
     console.log('Connected to database!');
-    app.listen(3000, () => {
-    console.log('Server running on port 3000');
-
-});
-}).catch(() => {
-     console.log("Connection failed");
-});
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.log('Connection failed:', err);
+  });
