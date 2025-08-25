@@ -61,14 +61,17 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // Routes
-app.use('/api/products', ProductRoute);   // already existed
-app.use('/api/users', UserRoute);         // register/login
-app.use('/api/orders', OrderRoute);       // place order
-app.use('/api/favorites', FavoriteRoute); // add favorites
+app.use('/api/products', ProductRoute);   
+app.use('/api/users', UserRoute);         
+app.use('/api/orders', OrderRoute);      
+app.use('/api/favorites', FavoriteRoute); 
 
-// Health check endpoint (optional, useful for testing server status)
+// Health check endpoint for testing server status
 app.get('/', (req, res) => {
-  res.send("E-commerce API is running...");
+     res.json({
+         status: true,
+         message: 'Health check pass'
+     });
 });
 
 // Connect to MongoDB and start server
